@@ -1,6 +1,7 @@
 require "gemstash"
 require "puma/commonlogger"
 
+use Gemstash::Statsd
 use Rack::Deflater
 use Gemstash::Logging::RackMiddleware
 

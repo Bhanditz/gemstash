@@ -20,6 +20,7 @@ module Gemstash
   autoload :RackEnvRewriter,     "gemstash/rack_env_rewriter"
   autoload :Resource,            "gemstash/storage"
   autoload :SpecsBuilder,        "gemstash/specs_builder"
+  autoload :Statsd,              "gemstash/statsd"
   autoload :Storage,             "gemstash/storage"
   autoload :S3,                  "gemstash/s3"
   autoload :S3Resource,          "gemstash/storage"
