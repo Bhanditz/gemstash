@@ -15,20 +15,21 @@ module Gemstash
 
       status, header, body = @app.call env
 
-      # the path with the leading slash removed
-      path = env['PATH_INFO'][1..-1]
-      path = path.gsub('/', '-')
-      path = path.gsub('.', '-')
+      begin
+        path = env['PATH_INFO'].split('/')[1]
 
-      metric = ""
-      metric << path
-      metric << "."
-      metric << env["REQUEST_METHOD"].downcase
-      metric << "."
-      metric << status.to_s
+        metric = ""
+        metric << path
+        metric << "."
+        metric << env["REQUEST_METHOD"].downcase
+        metric << "."
+        metric << status.to_s
 
-      @statsd.timing(metric, (Time.now - start))
-      @statsd.increment(metric)
+        @statsd.timing(metric, (Time.now - start))
+        @statsd.increment(metric)
+      rescue StandardError
+        @statsd.increment('gemstash-errors')
+      end
 
       [status, header, body]
     end
